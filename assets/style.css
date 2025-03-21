@@ -10,10 +10,12 @@
 }
 
 .github-user-info .avatar {
-    width: 80px;
-    height: 80px;
+    width: 80px !important;
+    height: 80px !important;
     border-radius: 50%;
+    object-fit: cover;
 }
+
 
 .github-user-info .info h2 {
     margin: 0;
@@ -76,4 +78,36 @@
     margin-top: 10px;
     display: flex;
     justify-content: space-between;
+}
+
+@media (prefers-color-scheme: dark) {
+    .github-user-info {
+        background-color: #1f1f1f;
+        color: #e0e0e0;
+    }
+
+    .github-user-info .info a.profile-link {
+        background-color: #0366d6;
+        color: white;
+    }
+
+    .github-user-info .info .stats,
+    .github-user-info .info .location,
+    .github-user-info .info .join-date {
+        color: #bbb;
+    }
+
+    .github-repo-card {
+        background-color: #2a2a2a;
+        border-color: #444;
+        color: #e0e0e0;
+    }
+
+    .github-repo-card a {
+        color: #58a6ff;
+    }
+
+    .github-repo-card .meta {
+        color: #bbb;
+    }
 }
