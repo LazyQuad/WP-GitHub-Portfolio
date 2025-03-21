@@ -3,7 +3,7 @@
 Plugin Name: WP GitHub Portfolio
 Plugin URI: https://github.com/LazyQuad/wp-github-portfolio
 Description: Display your public GitHub repositories on any page using a shortcode. Based on the work of 2kabhishek.
-Version: 1.3.0
+Version: 1.3.1
 Author: Deryll Newman
 Author URI: https://github.com/LazyQuad
 */
