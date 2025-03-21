@@ -1,3 +1,40 @@
+.github-user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.github-user-info .avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.github-user-info .info h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.github-user-info .info p {
+    margin: 5px 0;
+    color: #444;
+}
+
+.github-user-info .info .location {
+    font-style: italic;
+}
+
+.github-user-info .info a {
+    color: #0366d6;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 #github-projects {
     display: grid;
     gap: 1rem;
