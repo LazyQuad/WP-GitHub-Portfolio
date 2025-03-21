@@ -1,22 +1,24 @@
 .github-user-info {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
-    gap: 20px;
-    background: #f9f9f9;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
-
-.github-user-info .avatar {
-    width: 80px !important;
-    height: 80px !important;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .github-user-info .info {
+    margin-left: 1rem;
+    max-width: 500px;
+  }
+  
+  .github-user-info .avatar {
+    width: 100px !important;
+    height: 100px !important;
     border-radius: 50%;
-    object-fit: cover;
-}
-
-
+    margin-bottom: 1rem;
+  }
+  
 .github-user-info .info h2 {
     margin: 0;
     font-size: 1.5rem;
@@ -79,6 +81,48 @@
     display: flex;
     justify-content: space-between;
 }
+
+/* List view styles */
+.list-view .github-repo-list-item {
+    padding: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  .list-view .github-repo-list-item a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #0366d6;
+  }
+  
+  .list-view .github-repo-list-item span {
+    display: inline-block;
+    margin-left: 0.5rem;
+    color: #555;
+  }
+  
+  .list-view .github-repo-list-item small {
+    display: block;
+    color: #888;
+    font-size: 0.85rem;
+    margin-top: 4px;
+  }
+  
+  .dark-mode.list-view .github-repo-list-item {
+    border-color: #444;
+    color: #ddd;
+  }
+  
+  .dark-mode.list-view .github-repo-list-item a {
+    color: #70b0ff;
+  }
+  
+  .dark-mode.list-view .github-repo-list-item span,
+  .dark-mode.list-view .github-repo-list-item small {
+    color: #aaa;
+  }
+  
 
 @media (prefers-color-scheme: dark) {
     .github-user-info {

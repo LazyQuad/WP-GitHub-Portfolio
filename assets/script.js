@@ -3,21 +3,17 @@ jQuery(document).ready(function ($) {
     const user = container.data('user');
     const limit = parseInt(container.data('limit'), 10);
     const showUserInfo = container.data('show-user-info') === 'yes';
+    const viewMode = container.data('view') || 'card';
 
-    const cacheDuration = 60 * 60 * 1000; // 1 hour in milliseconds
+    const cacheDuration = 60 * 60 * 1000; // 1 hour
     const now = new Date().getTime();
 
     const profileKey = `github_profile_${user}`;
     const reposKey = `github_repos_${user}`;
 
-    let profileData = null;
-    let repoData = null;
-
-    // Helper: Load from cache
     function loadFromCache(key) {
         const cached = localStorage.getItem(key);
         if (!cached) return null;
-
         const parsed = JSON.parse(cached);
         if (now - parsed.timestamp > cacheDuration) {
             localStorage.removeItem(key);
@@ -26,7 +22,6 @@ jQuery(document).ready(function ($) {
         return parsed.data;
     }
 
-    // Helper: Save to cache
     function saveToCache(key, data) {
         localStorage.setItem(key, JSON.stringify({
             data,
@@ -34,11 +29,10 @@ jQuery(document).ready(function ($) {
         }));
     }
 
-    // Helper: Display profile info
     function renderProfile(profile) {
         const createdDate = new Date(profile.created_at).toLocaleDateString();
-
         let extraLinks = '';
+
         if (profile.blog) {
             extraLinks += `<p><a href="${profile.blog}" target="_blank">🔗 Website</a></p>`;
         }
@@ -70,31 +64,39 @@ jQuery(document).ready(function ($) {
         container.before(userInfo);
     }
 
-    // Helper: Render repos
     function renderRepos(repos) {
         container.empty();
         const projects = repos.slice(0, limit);
 
         $.each(projects, function (i, repo) {
-            const repoCard = $(`
-                <div class="github-repo-card">
-                    <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
-                    <p>${repo.description || 'No description'}</p>
-                    <div class="meta">
-                        <span>★ ${repo.stargazers_count}</span>
-                        <span>⏱️ Updated: ${new Date(repo.updated_at).toLocaleDateString()}</span>
+            if (viewMode === 'list') {
+                const listItem = $(`
+                    <div class="github-repo-list-item">
+                        <a href="${repo.html_url}" target="_blank">${repo.name}</a> - 
+                        <span>${repo.description || 'No description'}</span>
+                        <small>⭐ ${repo.stargazers_count} • Last updated: ${new Date(repo.updated_at).toLocaleDateString()}</small>
                     </div>
-                </div>
-            `);
-            container.append(repoCard);
+                `);
+                container.append(listItem);
+            } else {
+                const card = $(`
+                    <div class="github-repo-card">
+                        <h3><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
+                        <p>${repo.description || 'No description'}</p>
+                        <div class="meta">
+                            <span>★ ${repo.stargazers_count}</span>
+                            <span>⏱️ Updated: ${new Date(repo.updated_at).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                `);
+                container.append(card);
+            }
         });
     }
 
-    // Load from localStorage
-    profileData = loadFromCache(profileKey);
-    repoData = loadFromCache(reposKey);
+    const profileData = loadFromCache(profileKey);
+    const repoData = loadFromCache(reposKey);
 
-    // Fetch from API if not cached
     if (!profileData || !repoData) {
         if (showUserInfo) {
             $.getJSON(`https://api.github.com/users/${user}`, function (data) {
@@ -108,9 +110,7 @@ jQuery(document).ready(function ($) {
             renderRepos(data);
         });
     } else {
-        if (showUserInfo) {
-            renderProfile(profileData);
-        }
+        if (showUserInfo) renderProfile(profileData);
         renderRepos(repoData);
     }
 });
