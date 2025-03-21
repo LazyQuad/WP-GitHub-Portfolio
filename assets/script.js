@@ -4,16 +4,38 @@ jQuery(document).ready(function ($) {
     const limit = parseInt(container.data('limit'), 10);
     const showUserInfo = container.data('show-user-info') === 'yes';
 
-    const profile = container.data('profile');
-    const repos = container.data('repos');
+    const cacheDuration = 60 * 60 * 1000; // 1 hour in milliseconds
+    const now = new Date().getTime();
 
-    if (!user) {
-        container.html('<p>GitHub username is missing.</p>');
-        return;
+    const profileKey = `github_profile_${user}`;
+    const reposKey = `github_repos_${user}`;
+
+    let profileData = null;
+    let repoData = null;
+
+    // Helper: Load from cache
+    function loadFromCache(key) {
+        const cached = localStorage.getItem(key);
+        if (!cached) return null;
+
+        const parsed = JSON.parse(cached);
+        if (now - parsed.timestamp > cacheDuration) {
+            localStorage.removeItem(key);
+            return null;
+        }
+        return parsed.data;
     }
 
-    // Display user profile info if enabled
-    if (showUserInfo && profile) {
+    // Helper: Save to cache
+    function saveToCache(key, data) {
+        localStorage.setItem(key, JSON.stringify({
+            data,
+            timestamp: now
+        }));
+    }
+
+    // Helper: Display profile info
+    function renderProfile(profile) {
         const createdDate = new Date(profile.created_at).toLocaleDateString();
 
         let extraLinks = '';
@@ -24,7 +46,7 @@ jQuery(document).ready(function ($) {
             extraLinks += `<p><a href="https://twitter.com/${profile.twitter_username}" target="_blank">🐦 @${profile.twitter_username}</a></p>`;
         }
 
-        const userInfo = $('
+        const userInfo = $(`
             <div class="github-user-info">
                 <img src="${profile.avatar_url}" alt="${profile.login}" class="avatar">
                 <div class="info">
@@ -44,12 +66,12 @@ jQuery(document).ready(function ($) {
                     <a class="profile-link" href="${profile.html_url}" target="_blank">View GitHub Profile</a>
                 </div>
             </div>
-        ');
+        `);
         container.before(userInfo);
     }
 
-    // Display repositories
-    if (repos && repos.length > 0) {
+    // Helper: Render repos
+    function renderRepos(repos) {
         container.empty();
         const projects = repos.slice(0, limit);
 
@@ -66,7 +88,29 @@ jQuery(document).ready(function ($) {
             `);
             container.append(repoCard);
         });
+    }
+
+    // Load from localStorage
+    profileData = loadFromCache(profileKey);
+    repoData = loadFromCache(reposKey);
+
+    // Fetch from API if not cached
+    if (!profileData || !repoData) {
+        if (showUserInfo) {
+            $.getJSON(`https://api.github.com/users/${user}`, function (data) {
+                saveToCache(profileKey, data);
+                renderProfile(data);
+            });
+        }
+
+        $.getJSON(`https://api.github.com/users/${user}/repos?sort=updated`, function (data) {
+            saveToCache(reposKey, data);
+            renderRepos(data);
+        });
     } else {
-        container.html('<p>No repositories found.</p>');
+        if (showUserInfo) {
+            renderProfile(profileData);
+        }
+        renderRepos(repoData);
     }
 });
