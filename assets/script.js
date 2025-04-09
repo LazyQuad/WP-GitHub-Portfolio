@@ -45,7 +45,15 @@ jQuery(document).ready(function ($) {
         $('.view-dropdown, .sort-dropdown').on('change', function () {
             mode = $('.view-dropdown').val();
             sortType = $('.sort-dropdown').val();
-            container.removeClass().addClass('github-portfolio ' + getViewMode() + '-view ' + getLayoutMode());
+            function init() {
+                container.html('<div class="loader"></div>');
+                $.get(`https://api.github.com/users/${user}`, function (profile) {
+                    container.empty();
+                    container.removeClass().addClass('github-portfolio ' + getViewMode() + '-view ' + getLayoutMode());
+                    renderHeader(profile);
+                    fetchGitHubRepos();
+                });
+            }
             container.empty();
             fetchGitHubRepos();
         });
