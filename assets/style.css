@@ -1,92 +1,179 @@
-/* GitHub User Info Section */
-.github-user-info {
-    display: block;
-    text-align: center;
-    margin-bottom: 2rem;
+/* GitHub Header Section */
+.github-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.github-header-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #24292e;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+  flex-grow: 1;
+  flex-wrap: wrap;
+}
+
+.github-icon {
+  width: 1em !important;
+  height: 1em !important;
+  vertical-align: middle !important;
+  object-fit: contain !important;
+  display: inline-block !important;
+  max-width: 100% !important;
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.1));
+}
+
+.github-header-link span {
+  margin-right: 1rem;
+}
+
+.github-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.view-dropdown,
+.sort-dropdown {
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23666' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 12px 8px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 2.25rem;
+  line-height: 1.25rem;
+  min-width: 120px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  transition: border 0.2s ease;
+  padding-right: 2rem;
+}
+
+.view-dropdown:hover,
+.sort-dropdown:hover {
+  border-color: #999;
+}
+
+@media (max-width: 600px) {
+  .github-header {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .github-user-info .avatar {
-    width: 100px !important;
-    height: 100px !important;
-    border-radius: 50%;
-    margin-bottom: 1rem;
+  .github-controls {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
   }
-  
-  .github-user-info .info h2 {
-    font-size: 1.5rem;
-    margin: 0.5rem 0;
+  .view-dropdown,
+  .sort-dropdown {
+    width: 100%;
   }
-  
-  /* Repo Cards (Card View) */
-  .github-repo-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 15px;
-    background: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    margin-bottom: 1.5rem;
-    transition: box-shadow 0.2s ease-in-out;
+}
+
+/* Loader */
+.loader {
+  width: 24px;
+  height: 24px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #24292e;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 1rem auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
-  
-  .github-repo-card h3 {
-    margin-top: 0;
+}
+
+/* Repo Cards (Card View) */
+.github-repo-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  background: #fff;
+  margin-bottom: 1.5rem;
+  box-sizing: border-box;
+}
+
+.github-repo-card h3 {
+  margin-top: 0;
+}
+
+.github-repo-card .meta {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Horizontal card style */
+.github-portfolio.card-view.horizontal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.github-portfolio.card-view.horizontal .github-repo-card {
+  width: calc(33.333% - 1rem);
+  margin: 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+@media (max-width: 992px) {
+  .github-portfolio.card-view.horizontal .github-repo-card {
+    width: calc(50% - 1rem);
   }
-  
-  .github-repo-card .meta {
-    font-size: 0.85rem;
-    color: #666;
-    margin-top: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .github-portfolio.card-view.horizontal .github-repo-card {
+    width: 100%;
   }
-  
-  /* List View */
-  .list-view .github-repo-list-item {
-    padding: 1rem 0;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-  
-  .list-view .github-repo-list-item a {
-    font-weight: bold;
-    text-decoration: none;
-    color: #0366d6;
-  }
-  
-  .list-view .github-repo-list-item span {
-    display: inline-block;
-    margin-left: 0.5rem;
-    color: #555;
-  }
-  
-  .list-view .github-repo-list-item small {
-    display: block;
-    color: #888;
-    font-size: 0.85rem;
-    margin-top: 4px;
-  }
-  
-  /* Dark Mode – Only for Cards & List View */
-  .dark-mode .github-repo-card {
-    background-color: #222;
-    border-color: #444;
-    color: #ccc;
-  }
-  
-  .dark-mode .github-repo-card .meta {
-    color: #aaa;
-  }
-  
-  .dark-mode.list-view .github-repo-list-item {
-    border-color: #444;
-    color: #ccc;
-  }
-  
-  .dark-mode.list-view .github-repo-list-item a {
-    color: #70b0ff;
-  }
-  
-  .dark-mode.list-view .github-repo-list-item span,
-  .dark-mode.list-view .github-repo-list-item small {
-    color: #aaa;
-  }
-  
+}
+
+/* Highlight pinned repos */
+.github-repo-card.pinned {
+  border-color: #f90;
+  box-shadow: 0 0 0 2px rgba(255, 144, 0, 0.2);
+}
+
+.repo-topic {
+  background: #eef;
+  color: #336;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-right: 5px;
+}
+
+/* List View */
+.list-view .github-repo-list-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 1rem;
+}
+
+.list-view .github-repo-list-item a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #0366d6;
+}
