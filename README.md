@@ -65,8 +65,8 @@ Place your custom GitHub icons in `assets/` if you want to style them.
 ## 🧠 Credits
 
 Built by [Deryll Newman (LazyQuad)](https://lazyquad.com)  
-Code collaboration and documentation by [ChatGPT, OpenAI](https://openai.com/chatgpt)
-Design inspired by [2KAbhishek](https://github.com/2kabhishek/projects)
+Design inspired by [2KAbhishek](https://github.com/2kabhishek/projects)   
+Code collaboration and documentation by [ChatGPT, OpenAI](https://openai.com/chatgpt) 
 
 ---
 
