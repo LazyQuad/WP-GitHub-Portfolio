@@ -1,4 +1,4 @@
-# WP GitHub Portfolio
+# WP GitHub Portfolio Plugin
 
 Display your GitHub repositories beautifully on your WordPress site using a shortcode. Supports multiple layouts, sorting, pinned repositories, and a sleek, modern design with AJAX functionality.
 
